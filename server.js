@@ -19,11 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("./public"));
 
-// connect to database
-// mongoose.Promise = Promise;
-// mongoose.connect("mongodb://localhost/ESPNScraper", {
-//   useMongoClient: true
-// });
+
 mongoose.Promise = Promise;
 var dbConnect = process.env.MONGODB_URI || "mongodb://localhost/ESPNScraper";
 if(process.env.MONGODB_URI) {
@@ -32,13 +28,6 @@ if(process.env.MONGODB_URI) {
     mongoose.connect(dbConnect);
 }
 
-// var db = mongoose.connection;
-// db.on('error',function(err){
-//     console.log('Mongoose Error',err);
-// });
-// db.once('open', function(){
-//     console.log("Mongoose connection is successful");
-// });
 var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({

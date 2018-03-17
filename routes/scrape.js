@@ -8,7 +8,7 @@ var Save = require("../models/Save");
 
 module.exports = function (app) {
     app.get("/scrape", function (req, res) {
-        request("https://www.espn.com/", function (error, response, html) {
+        request("http://www.espn.com/", function (error, response, html) {
 
             // Load the HTML into cheerio and save it to a variable
             // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
@@ -20,14 +20,14 @@ module.exports = function (app) {
             // NOTE: Cheerio selectors function similarly to jQuery's selectors,
             // but be sure to visit the package's npm page to see how it works
 
-            $("headline").each(function (i, element) {
-                // var result = {};
+            $("li data-story-id").each(function (i, element) {
+                var result = {};
                 // var link = $(element).children().attr("href");
                 // var title = $(element).children().text();
                 // result.summary = $(element).children("p.summary").text();
                 // result.byline = $(element).children("p.byline").text();
                 result.title = $(element).children("a");
-                result.link = $(element).children("a").attr("headline");
+                result.link = $(element).children("a").attr("href");
                 // Save these results in an object that we'll push into the results array we defined earlier
                 if (result.title && result.link) {
                     var entry = new Article(result);
